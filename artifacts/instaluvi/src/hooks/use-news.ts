@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, query, orderBy, addDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../lib/firebaseConfig';
 
 export interface NewsItem {
@@ -7,12 +7,13 @@ export interface NewsItem {
   title: string;
   description: string;
   imageUrl?: string;
+  active: boolean;
   createdAt: number;
 }
 
 const STATIC_NEWS: NewsItem[] = [
-  { id: 'n1', title: 'Nueva línea de ventanas europeas', description: 'Descubre nuestra nueva línea con perfiles de alta eficiencia energética.', createdAt: 1 },
-  { id: 'n2', title: 'Apertura nueva sucursal', description: 'Estaremos más cerca de ti en nuestra nueva sucursal de Santa Ana.', createdAt: 2 },
+  { id: 'n1', title: 'Nueva línea de ventanas europeas', description: 'Descubre nuestra nueva línea con perfiles de alta eficiencia energética diseñados para el clima centroamericano.', active: true, createdAt: 1 },
+  { id: 'n2', title: 'Apertura nueva sucursal en Sonsonate', description: 'Estaremos más cerca de ti con nuestra nueva sucursal en el corazón de Sonsonate.', active: true, createdAt: 2 },
 ];
 
 export function useNews() {
@@ -24,24 +25,32 @@ export function useNews() {
     try {
       const q = query(collection(db, 'news'), orderBy('createdAt', 'desc'));
       const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as NewsItem));
-      
-      if (data.length === 0) {
-        setNews(STATIC_NEWS);
-      } else {
-        setNews(data);
-      }
-    } catch (error) {
-      console.error('Error fetching news:', error);
+      const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as NewsItem));
+      setNews(data.length === 0 ? STATIC_NEWS : data);
+    } catch {
       setNews(STATIC_NEWS);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchNews();
-  }, []);
+  const addNews = async (data: Omit<NewsItem, 'id' | 'createdAt'>) => {
+    const ref = await addDoc(collection(db, 'news'), { ...data, createdAt: Date.now() });
+    await fetchNews();
+    return ref.id;
+  };
 
-  return { news, loading, refetch: fetchNews };
+  const updateNews = async (id: string, data: Partial<Omit<NewsItem, 'id'>>) => {
+    await updateDoc(doc(db, 'news', id), data as Record<string, unknown>);
+    await fetchNews();
+  };
+
+  const deleteNews = async (id: string) => {
+    await deleteDoc(doc(db, 'news', id));
+    await fetchNews();
+  };
+
+  useEffect(() => { fetchNews(); }, []);
+
+  return { news, loading, refetch: fetchNews, addNews, updateNews, deleteNews };
 }

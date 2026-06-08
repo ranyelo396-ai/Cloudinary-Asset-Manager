@@ -1,44 +1,58 @@
-# [Project name]
+# INSTALUVI
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Corporate website for INSTALUVI — a Salvadoran PVC windows and doors company — with a public-facing landing page and a Firebase-backed admin panel for full content management.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/instaluvi run dev` — run the frontend (Vite, reads PORT env var)
 - `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- Navigate to `/admin` to access the CMS (requires Firebase Auth login)
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 18 + Vite + Tailwind CSS v4 + Shadcn/ui + Framer Motion + Wouter (routing)
+- CMS/Auth: Firebase Auth + Firestore (project: instaluvi-3ef4c)
+- Images: Cloudinary (cloud: dkfmnxxet, preset: Instal)
+- Icons: Lucide + react-icons (SiWhatsapp)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/instaluvi/src/pages/home.tsx` — main landing page (split hero, nosotros, products, gallery, branches, news)
+- `artifacts/instaluvi/src/pages/admin/AdminLayout.tsx` — admin sidebar shell + auth guard (redirects to /login if unauthenticated)
+- `artifacts/instaluvi/src/pages/admin/` — one page per section: Dashboard, ProductsAdmin, GalleryAdmin, BranchesAdmin, NewsAdmin, PromotionsAdmin, SettingsAdmin
+- `artifacts/instaluvi/src/components/admin/` — shared admin components: ImageUpload, AdminModal, ConfirmDialog
+- `artifacts/instaluvi/src/hooks/` — use-products, use-gallery, use-branches, use-news, use-promotions, use-settings, use-auth (all Firestore-backed with full CRUD)
+- `artifacts/instaluvi/src/lib/firebaseConfig.ts` — Firebase init
+- `artifacts/instaluvi/src/lib/cloudinary.ts` — Cloudinary upload helper
+- `artifacts/instaluvi/src/index.css` — Tailwind theme + INSTALUVI utility classes (hero-title, section-title, btn-primary, etc.)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- All content (products, gallery, branches, news, promotions) is stored in Firestore and fetched live — no static data files.
+- Firebase Auth protects every `/admin/*` route via `AdminLayout` which uses `useEffect` to redirect to `/login` when unauthenticated.
+- Cloudinary handles all image uploads from the admin panel via a dedicated `uploadToCloudinary` helper; no images are stored in Firebase.
+- React Router replaced by Wouter for lightweight SPA routing; base path injected from `import.meta.env.BASE_URL`.
+- Custom CSS utility classes (hero-title, btn-primary, instaluvi-container, etc.) defined in `@layer components` so Tailwind purges them correctly.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Home page**: Split hero (text left / image right), 4-item benefits bar, "Nosotros" dark section with animated counters, product cards grid, photo gallery with category filter + lightbox, projects stats overlay, branches grid, news cards, WhatsApp FAB, mobile bottom nav.
+- **Admin panel** (`/admin`): Full CRUD for Products, Gallery, Branches, News, Promotions, and site Settings. Protected by Firebase Auth. All image uploads go to Cloudinary.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Keep React + Vite stack — do NOT migrate to HTML/vanilla JS or GitHub Pages regardless of any future requests.
+- WhatsApp: 50360707582
+- Facebook: https://www.facebook.com/share/1CLdnaFaV9/
+- Instagram: https://www.instagram.com/instaluvi_elsalvador
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Always restart the `artifacts/instaluvi: web` workflow after writing new files, or HMR may serve cached versions.
+- The `hero-title`, `section-title`, `btn-primary`, and `instaluvi-container` CSS classes must stay in `index.css @layer components` — they are not Tailwind classes.
+- Firebase env vars (VITE_FIREBASE_*) and Cloudinary vars (VITE_CLOUDINARY_*) are stored as Replit secrets.
+- Admin pages return `null` (not an error) when the auth check is still loading — the `useEffect` redirect fires after Firebase resolves the auth state.
 
 ## Pointers
 

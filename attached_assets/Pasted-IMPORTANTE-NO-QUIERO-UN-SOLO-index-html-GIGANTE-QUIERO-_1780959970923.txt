@@ -1,0 +1,178 @@
+IMPORTANTE:
+
+NO QUIERO UN SOLO index.html GIGANTE.
+
+QUIERO UNA ARQUITECTURA PROFESIONAL, ORDENADA Y ESCALABLE, SIMILAR A UN PROYECTO EMPRESARIAL REAL.
+
+PERO UTILIZANDO ÚNICAMENTE:
+
+* HTML5
+* CSS3
+* JavaScript Vanilla ES6+
+* Firebase
+* Firestore
+* Firebase Authentication
+* Cloudinary
+
+SIN:
+
+* React
+* Next.js
+* TypeScript
+* TSX
+* JSX
+* Vite
+* Node.js
+* npm
+* pnpm
+
+---
+
+QUIERO UNA ESTRUCTURA SIMILAR A ESTA:
+
+Instaluvi/
+│
+├── index.html
+├── login.html
+├── admin.html
+├── productos.html
+├── galeria.html
+├── sucursales.html
+├── promociones.html
+│
+├── assets/
+│   │
+│   ├── css/
+│   │   ├── style.css
+│   │   ├── admin.css
+│   │   ├── mobile.css
+│   │   └── animations.css
+│   │
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── auth.js
+│   │   ├── dashboard.js
+│   │   ├── products.js
+│   │   ├── gallery.js
+│   │   ├── promotions.js
+│   │   ├── branches.js
+│   │   ├── settings.js
+│   │   ├── whatsapp.js
+│   │   └── cloudinary.js
+│   │
+│   ├── images/
+│   ├── icons/
+│   └── logos/
+│
+├── firebase/
+│   ├── firebase-config.js
+│   ├── firestore.js
+│   ├── auth.js
+│   └── analytics.js
+│
+├── admin/
+│   ├── dashboard.html
+│   ├── products.html
+│   ├── gallery.html
+│   ├── promotions.html
+│   ├── branches.html
+│   └── settings.html
+│
+├── firestore.rules
+├── robots.txt
+├── sitemap.xml
+└── README.md
+
+---
+
+QUIERO QUE EL DISEÑO ACTUAL SE MANTENGA EXACTAMENTE IGUAL.
+
+NO MODIFICAR:
+
+* Hero split
+* Header
+* Footer
+* CTA azul
+* Productos
+* Nosotros
+* Proyectos
+* Sucursales
+* Navegación móvil tipo app
+* Responsive
+* Animaciones
+
+El diseño actual está aprobado.
+
+---
+
+QUIERO FUNCIONALIDAD REAL:
+
+Firebase Authentication
+
+Firestore
+
+Cloudinary
+
+Dashboard
+
+CRUD Productos
+
+CRUD Galería
+
+CRUD Promociones
+
+CRUD Sucursales
+
+Configuración del sitio
+
+WhatsApp automático
+
+Login y Logout
+
+Protección de Admin
+
+---
+
+LAS IMÁGENES DEBEN SUBIRSE REALMENTE A CLOUDINARY.
+
+Cloud Name:
+dkfmnxxet
+
+Upload Preset:
+Instal
+
+---
+
+FIREBASE:
+
+Proyecto:
+instaluvi-3ef4c
+
+Implementar:
+
+* Authentication
+* Firestore
+* Analytics
+
+---
+
+COMPATIBILIDAD
+
+Debe funcionar directamente en:
+
+* GitHub Pages
+* Netlify
+* Vercel
+* Hosting compartido
+
+Sin build.
+
+Sin compilación.
+
+Sin npm install.
+
+---
+
+OBJETIVO:
+
+Mantener el diseño premium actual exactamente igual, pero con una arquitectura profesional organizada en múltiples archivos HTML, CSS y JavaScript Vanilla para facilitar mantenimiento, escalabilidad y compatibilidad total con GitHub Pages.

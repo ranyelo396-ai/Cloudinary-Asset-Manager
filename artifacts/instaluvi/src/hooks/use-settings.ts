@@ -7,12 +7,17 @@ export interface Settings {
   facebook: string;
   instagram: string;
   logoUrl?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroImageUrl?: string;
 }
 
 const DEFAULT_SETTINGS: Settings = {
   whatsapp: '50360707582',
   facebook: 'https://www.facebook.com/share/1CLdnaFaV9/?mibextid=wwXIfr',
   instagram: 'https://www.instagram.com/instaluvi_elsalvador',
+  heroTitle: 'Ventanas y puertas que transforman tu hogar.',
+  heroSubtitle: 'Diseño, calidad y durabilidad en cada proyecto. Más de 20 años brindando soluciones que combinan estética, confort y seguridad.',
 };
 
 export function useSettings() {
@@ -22,24 +27,21 @@ export function useSettings() {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const docRef = doc(db, 'settings', 'general');
-      const snapshot = await getDoc(docRef);
-      if (snapshot.exists()) {
-        setSettings(snapshot.data() as Settings);
-      } else {
-        setSettings(DEFAULT_SETTINGS);
-      }
-    } catch (error) {
-      console.error('Error fetching settings:', error);
+      const snapshot = await getDoc(doc(db, 'settings', 'general'));
+      setSettings(snapshot.exists() ? (snapshot.data() as Settings) : DEFAULT_SETTINGS);
+    } catch {
       setSettings(DEFAULT_SETTINGS);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchSettings();
-  }, []);
+  const saveSettings = async (data: Settings) => {
+    await setDoc(doc(db, 'settings', 'general'), data, { merge: true });
+    setSettings(data);
+  };
 
-  return { settings, loading, refetch: fetchSettings };
+  useEffect(() => { fetchSettings(); }, []);
+
+  return { settings, loading, refetch: fetchSettings, saveSettings };
 }
