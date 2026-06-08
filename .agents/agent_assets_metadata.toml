@@ -1,0 +1,38 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "gfUHMDG5QuM4om06E8CpO"
+uri = "file://artifacts/instaluvi/public/images/hero.png"
+type = "image"
+title = "hero background pvc windows"
+
+[[generated]]
+id = "AKq52EyBi3zZzsPXWdTTW"
+uri = "file://artifacts/instaluvi/public/images/ventanas-corredizas.png"
+type = "image"
+title = "sliding pvc windows"
+
+[[generated]]
+id = "TdiKcnlwRWL9hExkq8qlM"
+uri = "file://artifacts/instaluvi/public/images/ventanas-abatibles.png"
+type = "image"
+title = "casement pvc windows"
+
+[[generated]]
+id = "fz3YACeX1o2HHdeKH0pzl"
+uri = "file://artifacts/instaluvi/public/images/puertas-corredizas.png"
+type = "image"
+title = "sliding pvc doors"
+
+[[generated]]
+id = "fZy4Xb70Lq3BgQsubIxQK"
+uri = "file://artifacts/instaluvi/public/images/puertas-pvc.png"
+type = "image"
+title = "pvc doors"
+
+[[generated]]
+id = "VNZx4ykNRyR3dLc5CTwLs"
+uri = "file://artifacts/instaluvi/public/images/nosotros.png"
+type = "image"
+title = "nosotros section side image"
