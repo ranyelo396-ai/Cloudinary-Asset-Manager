@@ -1,575 +1,355 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import {
-  ShieldCheck, Thermometer, VolumeX, Wrench,
-  ArrowRight, MapPin, Phone, Clock, ExternalLink,
-  Users, Building, Award, ChevronRight, Star
-} from "lucide-react";
-import { SiWhatsapp, SiFacebook, SiInstagram } from "react-icons/si";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ShieldCheck, Thermometer, VolumeX, Wrench, Building, Home as HomeIcon, Award, MapPin } from "lucide-react";
 import { useProducts } from "@/hooks/use-products";
 import { useBranches } from "@/hooks/use-branches";
 import { useGallery } from "@/hooks/use-gallery";
 import { useNews } from "@/hooks/use-news";
-import heroImg from "@assets/WhatsApp_Image_2026-06-08_at_11.18.13_AM_1780953725946.jpeg";
-
-/* ── Animated Counter ── */
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const duration = 2000;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
+import { SiWhatsapp } from "react-icons/si";
+import { useState } from "react";
+import refImage from "@assets/WhatsApp_Image_2026-06-08_at_11.18.13_AM_1780953725946.jpeg";
 
 export default function Home() {
   const { products } = useProducts();
   const { branches } = useBranches();
   const { gallery } = useGallery();
   const { news } = useNews();
-  const [activeTab, setActiveTab] = useState("Todos");
-  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const [activeGalleryTab, setActiveGalleryTab] = useState("Todos");
 
-  const galleryTabs = ["Todos", "Ventanas", "Puertas", "Proyectos", "Instalaciones"];
-  const filteredGallery = activeTab === "Todos"
-    ? gallery
-    : gallery.filter((g) => g.category === activeTab);
-
-  const benefits = [
-    { icon: ShieldCheck, title: "Alta resistencia", desc: "Materiales de calidad que garantizan durabilidad." },
-    { icon: Thermometer, title: "Aislamiento térmico", desc: "Mantiene tus espacios frescos y eficientes." },
-    { icon: VolumeX, title: "Aislamiento acústico", desc: "Disfruta de tranquilidad en cada ambiente." },
-    { icon: Wrench, title: "Garantía de instalación", desc: "Instalación profesional y garantía por escrito." },
-  ];
-
-  const nosotrosStats = [
-    { value: 20, suffix: "+", label: "Años de experiencia" },
-    { value: 1500, suffix: "+", label: "Proyectos completados" },
-    { value: 98, suffix: "%", label: "Clientes satisfechos" },
-    { value: 100, suffix: "%", label: "Garantía en instalación" },
-  ];
-
-  const proyectosStats = [
-    { value: 500, suffix: "+", label: "Hogares transformados" },
-    { value: 300, suffix: "+", label: "Negocios y oficinas atendidas" },
-    { value: 100, suffix: "%", label: "Compromiso con la calidad" },
-  ];
+  const galleryCategories = ["Todos", "Ventanas", "Puertas", "Proyectos", "Instalaciones"];
+  const filteredGallery = activeGalleryTab === "Todos" 
+    ? gallery 
+    : gallery.filter(item => item.category === activeGalleryTab);
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background">
       <Header />
-
-      {/* ═══════════════════════════════════════════════════
-          HERO — Split layout: text left / image right
-      ════════════════════════════════════════════════════ */}
-      <section id="inicio" className="pt-16 md:pt-18 min-h-[88vh] flex">
-        <div className="w-full flex flex-col md:flex-row">
-
-          {/* LEFT — Text content */}
-          <div className="flex-1 md:max-w-[46%] bg-white flex items-center order-2 md:order-1">
-            <div className="px-6 sm:px-10 lg:px-16 xl:px-20 py-14 md:py-0 max-w-xl">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="section-label block mb-4">
-                  Especialistas en PVC
-                </span>
-
-                <h1 className="hero-title text-foreground mb-5">
-                  Ventanas y puertas que transforman tu hogar.
-                </h1>
-
-                <p className="text-muted-foreground text-base leading-relaxed mb-8 max-w-sm">
-                  Diseño, calidad y durabilidad en cada proyecto. Más de 20 años brindando soluciones
-                  que combinan estética, confort y seguridad.
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                  <a
-                    href="https://wa.me/50360707582"
-                    target="_blank"
-                    rel="noreferrer"
-                    data-testid="hero-cta-whatsapp"
-                    className="btn-primary text-sm px-5 py-3"
-                  >
-                    <SiWhatsapp size={18} />
-                    Cotiza tu proyecto
-                  </a>
-                  <a
-                    href="#productos"
-                    data-testid="hero-cta-products"
-                    className="btn-outline-dark text-sm px-5 py-3"
-                  >
-                    Ver productos
-                    <ArrowRight size={16} />
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* RIGHT — Hero image */}
-          <div className="md:flex-1 relative h-64 sm:h-80 md:h-auto order-1 md:order-2 overflow-hidden">
-            <img
-              src="/images/hero.png"
-              alt="Ventanas y puertas PVC INSTALUVI"
-              className="w-full h-full object-cover"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).src = heroImg; }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent md:from-white/10" />
-          </div>
+      
+      {/* Hero Section */}
+      <section id="inicio" className="relative h-[100dvh] min-h-[600px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/hero.png" 
+            alt="Instaluvi Hero" 
+            className="w-full h-full object-cover"
+            onError={(e) => { e.currentTarget.src = refImage; }}
+          />
+          <div className="absolute inset-0 bg-primary/70 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════
-          BENEFITS BAR
-      ════════════════════════════════════════════════════ */}
-      <section className="bg-white py-0">
-        <div className="instaluvi-container">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-border rounded-xl shadow-md -mt-6 md:-mt-10 bg-white relative z-10 overflow-hidden"
+        
+        <div className="container relative z-10 px-4 text-center mt-16">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white max-w-4xl mx-auto leading-tight"
           >
-            {benefits.map((b, i) => {
-              const Icon = b.icon;
-              return (
-                <motion.div
-                  key={i}
-                  variants={fadeUp}
-                  className={`flex items-start gap-3.5 p-5 md:p-6 ${
-                    i < benefits.length - 1 ? "border-b md:border-b-0 md:border-r border-border" : ""
-                  } ${i === 1 ? "border-r border-border md:border-r" : ""}`}
-                >
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Icon size={20} className="text-accent" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm text-foreground">{b.title}</div>
-                    <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{b.desc}</div>
-                  </div>
-                </motion.div>
-              );
-            })}
+            Ventanas y puertas que transforman tu hogar.
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-6 text-lg md:text-xl text-white/90 max-w-2xl mx-auto"
+          >
+            Diseño, calidad y durabilidad en cada proyecto. Más de 20 años brindando soluciones que combinan estética, confort y seguridad.
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Button size="lg" className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20bd5a] text-white gap-2 text-lg h-14 px-8" asChild>
+              <a href="https://wa.me/50360707582" target="_blank" rel="noreferrer">
+                <SiWhatsapp size={24} />
+                Contactar por WhatsApp
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary text-lg h-14 px-8" asChild>
+              <a href="#productos">Ver Productos</a>
+            </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          NOSOTROS
-      ════════════════════════════════════════════════════ */}
-      <section id="nosotros" className="py-20 md:py-24 bg-primary text-white overflow-hidden">
-        <div className="instaluvi-container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      {/* Benefits Bar */}
+      <section className="bg-white py-12 border-b">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { icon: ShieldCheck, label: "Alta resistencia" },
+              { icon: Thermometer, label: "Aislamiento térmico" },
+              { icon: VolumeX, label: "Aislamiento acústico" },
+              { icon: Wrench, label: "Garantía de instalación" }
+            ].map((benefit, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex flex-col items-center text-center gap-3"
+              >
+                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-primary">
+                  <benefit.icon size={32} />
+                </div>
+                <span className="font-semibold text-foreground">{benefit.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Left: Text + Stats */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
+      {/* Nosotros */}
+      <section id="nosotros" className="py-24 bg-primary text-primary-foreground overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="space-y-6"
+              className="lg:w-1/2 space-y-6"
             >
-              <span className="text-accent text-xs font-semibold uppercase tracking-widest">Nosotros</span>
-              <h2 className="section-title text-white">
-                Más de{" "}
-                <span className="text-[#60a5fa]">20 años</span>
-                {" "}de experiencia
-              </h2>
-              <p className="text-white/70 leading-relaxed text-sm max-w-md">
-                Somos una empresa familiar salvadoreña dedicada a la fabricación e instalación de
-                ventanas y puertas de PVC. Nuestro compromiso es ofrecer productos de la más alta
-                calidad, con un servicio personalizado y garantía en cada proyecto.
+              <h2 className="text-3xl md:text-5xl font-bold">Más de 20 años de experiencia</h2>
+              <p className="text-lg text-primary-foreground/80 leading-relaxed">
+                Somos una empresa familiar salvadoreña dedicada a la fabricación e instalación de ventanas y puertas de PVC. Nuestro compromiso es entregar proyectos impecables, con atención al detalle y materiales de la más alta calidad.
               </p>
-              <a
-                href="#contacto"
-                className="btn-outline-white text-sm px-5 py-2.5 inline-flex items-center gap-2"
-              >
-                Conócenos más
-                <ArrowRight size={16} />
-              </a>
-
-              {/* 2x2 Stats grid */}
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                {nosotrosStats.map((s, i) => (
-                  <div
-                    key={i}
-                    className="bg-white/10 rounded-xl p-4 text-center border border-white/10"
-                  >
-                    <div className="text-3xl font-bold text-white">
-                      <AnimatedCounter target={s.value} suffix={s.suffix} />
-                    </div>
-                    <div className="text-xs text-white/60 mt-1 font-medium">{s.label}</div>
-                  </div>
-                ))}
-              </div>
+              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-primary mt-4">
+                Conocernos más
+              </Button>
             </motion.div>
 
-            {/* Right: Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="relative rounded-2xl overflow-hidden h-80 md:h-[480px] shadow-2xl"
+              className="lg:w-1/2 relative w-full"
             >
-              <img
-                src="/images/nosotros.png"
-                alt="Instaluvi equipo y proyectos"
-                className="w-full h-full object-cover"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = heroImg; }}
-              />
-              <div className="absolute inset-0 bg-primary/20" />
+              <img src="/images/nosotros.png" alt="Equipo Instaluvi" className="rounded-xl shadow-2xl object-cover w-full aspect-square md:aspect-[4/3] max-h-[500px]" />
+              <div className="absolute -bottom-8 -left-8 bg-white text-primary p-6 rounded-xl shadow-xl grid grid-cols-2 gap-8 hidden md:grid">
+                <div>
+                  <div className="text-4xl font-bold">20+</div>
+                  <div className="text-sm font-medium text-muted-foreground mt-1">Años experiencia</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold">1,500+</div>
+                  <div className="text-sm font-medium text-muted-foreground mt-1">Proyectos completados</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold">98%</div>
+                  <div className="text-sm font-medium text-muted-foreground mt-1">Clientes satisfechos</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold">100%</div>
+                  <div className="text-sm font-medium text-muted-foreground mt-1">Garantía instalación</div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          PRODUCTOS
-      ════════════════════════════════════════════════════ */}
-      <section id="productos" className="py-20 md:py-24 bg-white">
-        <div className="instaluvi-container">
-          {/* Header row */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-4">
-            <div>
-              <span className="section-label block mb-2">Productos</span>
-              <h2 className="section-title text-foreground max-w-sm">
-                Soluciones diseñadas para cada espacio
-              </h2>
-            </div>
-            <a
-              href="#contacto"
-              className="flex items-center gap-1.5 text-accent text-sm font-semibold hover:gap-3 transition-all"
-            >
-              Ver todos los productos
-              <ArrowRight size={16} />
-            </a>
+      {/* Productos */}
+      <section id="productos" className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground">Soluciones diseñadas para cada espacio</h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Descubre nuestra amplia gama de productos en PVC, fabricados a la medida de tus necesidades.</p>
           </div>
 
-          {/* Products grid — horizontal scroll on mobile */}
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex gap-5 overflow-x-auto no-scrollbar pb-2 md:grid md:grid-cols-4 md:overflow-visible"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, i) => (
               <motion.div
                 key={product.id}
-                variants={fadeUp}
-                data-testid={`product-card-${product.id}`}
-                className="group flex-shrink-0 w-[75vw] sm:w-[55vw] md:w-auto bg-white border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
               >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden bg-secondary">
-                  <img
-                    src={product.imageUrl}
-                    alt={product.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                  {/* Category icon badge */}
-                  <div className="absolute bottom-3 left-3 w-8 h-8 bg-primary rounded-md flex items-center justify-center shadow-md">
-                    <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 text-white">
-                      <rect x="2" y="3" width="20" height="18" rx="1" stroke="currentColor" strokeWidth="2"/>
-                      <path d="M8 3v18M16 3v18M2 12h20" stroke="currentColor" strokeWidth="1.5"/>
-                    </svg>
+                <Card className="overflow-hidden group cursor-pointer border-transparent shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src={product.imageUrl} 
+                      alt={product.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                   </div>
-                </div>
+                  <CardContent className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold mb-2">{product.title}</h3>
+                    <p className="text-muted-foreground text-sm line-clamp-3 mb-6 flex-1">{product.description}</p>
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-primary font-semibold text-sm flex items-center hover:underline">
+                        Ver más →
+                      </span>
+                      <Button size="icon" variant="ghost" className="text-[#25D366] hover:text-[#25D366] hover:bg-green-50 rounded-full h-10 w-10" asChild>
+                        <a href={`https://wa.me/50360707582?text=Hola INSTALUVI, deseo cotizar el producto: ${product.title} (ID: ${product.id})`} target="_blank" rel="noreferrer">
+                          <SiWhatsapp size={22} />
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                {/* Content */}
-                <div className="p-5">
-                  <h3 className="font-bold text-foreground mb-1.5 text-base leading-tight">{product.title}</h3>
-                  <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2 mb-4">{product.description}</p>
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="#contacto"
-                      className="text-accent text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
-                    >
-                      Ver más
-                      <ArrowRight size={14} />
-                    </a>
-                    <a
-                      href={`https://wa.me/50360707582?text=Hola%20INSTALUVI%2C%20deseo%20cotizar%20el%20producto%3A%20${encodeURIComponent(product.title)}%20(ID%3A%20${product.id})`}
-                      target="_blank"
-                      rel="noreferrer"
-                      data-testid={`btn-quote-${product.id}`}
-                      className="w-8 h-8 bg-[#25D366] text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-                      title="Cotizar por WhatsApp"
-                    >
-                      <SiWhatsapp size={15} />
-                    </a>
+      {/* Galería */}
+      <section id="proyectos" className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground">Nuestra Galería</h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Explora algunos de nuestros proyectos más recientes e inspírate.</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {galleryCategories.map(category => (
+              <Button 
+                key={category}
+                variant={activeGalleryTab === category ? "default" : "outline"}
+                onClick={() => setActiveGalleryTab(category)}
+                className="rounded-full px-6"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filteredGallery.map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer"
+              >
+                <img src={item.imageUrl} alt={item.title || item.category} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-white font-semibold text-lg">{item.category}</p>
+                    {item.title && <p className="text-white/80 text-sm mt-1">{item.title}</p>}
                   </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          GALERÍA
-      ════════════════════════════════════════════════════ */}
-      {gallery.length > 0 && (
-        <section id="galeria" className="py-20 md:py-24 bg-gray-50">
-          <div className="instaluvi-container">
-            <div className="text-center mb-10">
-              <span className="section-label block mb-2">Galería</span>
-              <h2 className="section-title text-foreground">Nuestros Proyectos</h2>
-              <p className="text-muted-foreground text-sm mt-2 max-w-lg mx-auto">
-                Explorá nuestros trabajos más recientes y encontrá inspiración para tu hogar u oficina.
-              </p>
-            </div>
-
-            {/* Filter tabs */}
-            <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 justify-center mb-8">
-              {galleryTabs.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  data-testid={`gallery-tab-${tab}`}
-                  className={`flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium border transition-all ${
-                    activeTab === tab
-                      ? "bg-accent text-white border-accent shadow-sm"
-                      : "bg-white text-muted-foreground border-border hover:border-accent hover:text-accent"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-
-            {/* Grid */}
-            <motion.div
-              layout
-              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
-            >
-              {filteredGallery.slice(0, 8).map((item, i) => (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: i * 0.04 }}
-                  onClick={() => setLightboxImg(item.imageUrl)}
-                  data-testid={`gallery-item-${item.id}`}
-                  className={`relative overflow-hidden rounded-lg cursor-pointer group ${
-                    i === 0 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"
-                  }`}
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.category}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-600"
-                  />
-                  <div className="absolute inset-0 bg-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                    <span className="text-white text-xs font-semibold bg-white/20 px-2 py-1 rounded">
-                      {item.category}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* ═══════════════════════════════════════════════════
-          PROYECTOS — Dark overlay stats
-      ════════════════════════════════════════════════════ */}
-      <section id="proyectos" className="relative py-24 overflow-hidden">
+      {/* Proyectos Stats Overlay */}
+      <section className="relative py-32 bg-primary/90 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            src="/images/nosotros.png"
-            alt="Proyectos INSTALUVI"
-            className="w-full h-full object-cover"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = heroImg; }}
+          <img 
+            src="/images/hero.png" 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-20 mix-blend-overlay"
+            onError={(e) => { e.currentTarget.src = refImage; }}
           />
-          <div className="absolute inset-0 bg-primary/85" />
         </div>
-
-        <div className="instaluvi-container relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            {/* Left: headline */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-white space-y-5"
-            >
-              <span className="text-accent text-xs font-semibold uppercase tracking-widest">Proyectos</span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                Cada{" "}
-                <span className="text-[#60a5fa]">proyecto</span>
-                {" "}cuenta una historia
-              </h2>
-              <p className="text-white/70 text-sm leading-relaxed max-w-sm">
-                Hemos formado parte de hogares, oficinas y comercios en todo El Salvador, llevando
-                calidad y confianza.
-              </p>
-              <a
-                href="https://wa.me/50360707582"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary inline-flex items-center gap-2 text-sm"
-              >
-                Ver proyectos
-                <ArrowRight size={16} />
-              </a>
+        <div className="container relative z-10 px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold">Cada proyecto cuenta una historia</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="space-y-4">
+              <HomeIcon size={48} className="mx-auto text-accent" />
+              <div className="text-5xl font-bold">500+</div>
+              <div className="text-lg text-white/80">Hogares transformados</div>
             </motion.div>
-
-            {/* Right: 3 stats */}
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-1 gap-6"
-            >
-              {proyectosStats.map((s, i) => (
-                <motion.div
-                  key={i}
-                  variants={fadeUp}
-                  className="flex items-center gap-5 border-b border-white/20 pb-5 last:border-0 last:pb-0"
-                >
-                  <div className="text-4xl md:text-5xl font-bold text-white min-w-[80px]">
-                    <AnimatedCounter target={s.value} suffix={s.suffix} />
-                  </div>
-                  <div className="text-white/70 text-sm font-medium">{s.label}</div>
-                </motion.div>
-              ))}
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="space-y-4">
+              <Building size={48} className="mx-auto text-accent" />
+              <div className="text-5xl font-bold">300+</div>
+              <div className="text-lg text-white/80">Negocios y oficinas</div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="space-y-4">
+              <Award size={48} className="mx-auto text-accent" />
+              <div className="text-5xl font-bold">100%</div>
+              <div className="text-lg text-white/80">Compromiso con la calidad</div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          SUCURSALES
-      ════════════════════════════════════════════════════ */}
-      <section id="sucursales" className="py-20 md:py-24 bg-white">
-        <div className="instaluvi-container">
-          <div className="text-center mb-10">
-            <span className="section-label block mb-2">Sucursales</span>
-            <h2 className="section-title text-foreground">Estamos cerca de ti</h2>
-            <p className="text-muted-foreground text-sm mt-2 max-w-md mx-auto">
-              Visitanos en cualquiera de nuestras ubicaciones y recibe asesoría personalizada.
-            </p>
+      {/* Sucursales */}
+      <section id="sucursales" className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground">Nuestras Sucursales</h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Visítanos en cualquiera de nuestras ubicaciones a nivel nacional para recibir asesoría personalizada.</p>
           </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch, i) => (
               <motion.div
                 key={branch.id}
-                variants={fadeUp}
-                data-testid={`branch-card-${branch.id}`}
-                className="bg-gray-50 border border-border rounded-xl p-6 hover:border-accent/40 hover:shadow-md transition-all duration-200"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white rounded-xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex items-start gap-5"
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} className="text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-foreground text-base mb-2">{branch.name}</h3>
-                    <div className="space-y-1.5">
-                      <p className="text-muted-foreground text-xs flex items-start gap-1.5">
-                        <MapPin size={12} className="text-accent mt-0.5 flex-shrink-0" />
-                        {branch.address}
-                      </p>
-                      <p className="text-muted-foreground text-xs flex items-center gap-1.5">
-                        <Phone size={12} className="text-accent flex-shrink-0" />
-                        {branch.phone}
-                      </p>
-                      <p className="text-muted-foreground text-xs flex items-center gap-1.5">
-                        <Clock size={12} className="text-accent flex-shrink-0" />
-                        {branch.hours}
-                      </p>
-                    </div>
-                    {branch.mapUrl && (
-                      <a
-                        href={branch.mapUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-3 inline-flex items-center gap-1 text-accent text-xs font-semibold hover:underline"
-                      >
-                        Ver en mapa
-                        <ExternalLink size={11} />
-                      </a>
-                    )}
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+                  <MapPin size={28} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl">{branch.name}</h3>
+                  <p className="text-muted-foreground mt-2">{branch.address}</p>
+                  <div className="mt-4 space-y-1">
+                    <p className="text-sm font-medium flex items-center gap-2">
+                      <span className="text-primary font-semibold">Tel:</span> {branch.phone}
+                    </p>
+                    <p className="text-sm text-muted-foreground">{branch.hours}</p>
                   </div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════
-          NOVEDADES
-      ════════════════════════════════════════════════════ */}
+      {/* News / Novedades */}
       {news.length > 0 && (
-        <section id="novedades" className="py-20 bg-gray-50">
-          <div className="instaluvi-container">
-            <div className="text-center mb-10">
-              <span className="section-label block mb-2">Novedades</span>
-              <h2 className="section-title text-foreground">Últimas noticias</h2>
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-foreground">Novedades</h2>
+              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Mantente al día con nuestras últimas noticias y lanzamientos.</p>
             </div>
-
-            <div className="flex gap-5 overflow-x-auto no-scrollbar pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {news.map((item, i) => (
-                <div
+                <motion.div
                   key={item.id}
-                  className="flex-shrink-0 w-72 md:w-auto bg-white border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
                 >
-                  {item.imageUrl && (
-                    <div className="h-40 overflow-hidden bg-secondary">
-                      <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  )}
-                  <div className="p-5">
-                    <h3 className="font-bold text-foreground text-sm mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground text-xs leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
+                  <Card className="h-full flex flex-col border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    {item.imageUrl && (
+                      <div className="h-48 overflow-hidden bg-gray-100">
+                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                      </div>
+                    )}
+                    <CardContent className="p-6 flex-1 flex flex-col justify-center">
+                      <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -579,22 +359,6 @@ export default function Home() {
       <Footer />
       <MobileNav />
       <WhatsAppButton />
-
-      {/* Lightbox */}
-      {lightboxImg && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setLightboxImg(null)}
-        >
-          <img src={lightboxImg} alt="Gallery" className="max-w-full max-h-[90vh] rounded-lg shadow-2xl" />
-          <button
-            onClick={() => setLightboxImg(null)}
-            className="absolute top-4 right-4 text-white text-2xl font-bold w-10 h-10 flex items-center justify-center"
-          >
-            ✕
-          </button>
-        </div>
-      )}
     </div>
   );
 }

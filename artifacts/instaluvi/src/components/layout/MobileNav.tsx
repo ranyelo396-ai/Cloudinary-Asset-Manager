@@ -1,54 +1,30 @@
-import { Home, Package, Newspaper, Image as ImageIcon, Phone } from "lucide-react";
-import { useState } from "react";
-
-const tabs = [
-  { label: "Inicio", href: "#inicio", icon: Home },
-  { label: "Productos", href: "#productos", icon: Package },
-  { label: "Novedades", href: "#novedades", icon: Newspaper },
-  { label: "Galería", href: "#galeria", icon: ImageIcon },
-  { label: "Contacto", href: "#contacto", icon: Phone },
-];
+import { Home, Grid, Image as ImageIcon, MapPin, Mail } from "lucide-react";
 
 export function MobileNav() {
-  const [active, setActive] = useState("Inicio");
-
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-      <div className="flex items-center justify-around h-16 px-1">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActive = active === tab.label;
-          return (
-            <a
-              key={tab.label}
-              href={tab.href}
-              onClick={() => setActive(tab.label)}
-              className="flex flex-col items-center justify-center gap-0.5 flex-1 h-full py-2 transition-all"
-              data-testid={`mobile-nav-${tab.label.toLowerCase()}`}
-            >
-              <div className={`relative flex items-center justify-center w-8 h-7 rounded-full transition-all duration-200 ${
-                isActive ? "bg-accent/10" : ""
-              }`}>
-                <Icon
-                  size={20}
-                  className={`transition-colors duration-200 ${
-                    isActive ? "text-accent" : "text-gray-400"
-                  }`}
-                  strokeWidth={isActive ? 2.5 : 1.8}
-                />
-                {isActive && (
-                  <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-accent rounded-full" />
-                )}
-              </div>
-              <span className={`text-[10px] font-medium transition-colors duration-200 leading-none ${
-                isActive ? "text-accent" : "text-gray-400"
-              }`}>
-                {tab.label}
-              </span>
-            </a>
-          );
-        })}
+    <div className="md:hidden fixed bottom-0 w-full bg-white border-t z-50 pb-safe">
+      <div className="flex justify-around items-center h-16">
+        <a href="#inicio" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary">
+          <Home size={20} />
+          <span className="text-[10px] mt-1 font-medium">Inicio</span>
+        </a>
+        <a href="#productos" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary">
+          <Grid size={20} />
+          <span className="text-[10px] mt-1 font-medium">Productos</span>
+        </a>
+        <a href="#proyectos" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary">
+          <ImageIcon size={20} />
+          <span className="text-[10px] mt-1 font-medium">Galería</span>
+        </a>
+        <a href="#sucursales" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary">
+          <MapPin size={20} />
+          <span className="text-[10px] mt-1 font-medium">Sucursales</span>
+        </a>
+        <a href="#contacto" className="flex flex-col items-center justify-center w-full h-full text-muted-foreground hover:text-primary">
+          <Mail size={20} />
+          <span className="text-[10px] mt-1 font-medium">Contacto</span>
+        </a>
       </div>
-    </nav>
+    </div>
   );
 }

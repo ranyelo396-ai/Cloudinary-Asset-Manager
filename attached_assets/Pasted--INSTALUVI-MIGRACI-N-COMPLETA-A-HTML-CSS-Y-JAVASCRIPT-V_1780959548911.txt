@@ -1,0 +1,456 @@
+# INSTALUVI - MIGRACIÓN COMPLETA A HTML, CSS Y JAVASCRIPT VANILLA
+
+IMPORTANTE:
+
+EL DISEÑO ACTUAL ESTÁ PERFECTO.
+
+NO QUIERO QUE REDISEÑES NADA.
+
+NO QUIERO NUEVO LAYOUT.
+
+NO QUIERO CAMBIOS DE ESTILO.
+
+NO QUIERO CAMBIAR LA EXPERIENCIA VISUAL.
+
+QUIERO MANTENER EXACTAMENTE EL DISEÑO ACTUAL QUE YA LOGRASTE.
+
+---
+
+# OBJETIVO
+
+Reconstruir TODO el proyecto actual utilizando exclusivamente:
+
+* HTML5
+* CSS3
+* JavaScript Vanilla ES6+
+* Firebase SDK Modular
+* Firestore
+* Firebase Authentication
+* Firebase Analytics
+* Cloudinary
+* Font Awesome
+* Swiper.js
+
+Debe funcionar directamente en:
+
+GitHub Pages
+
+Sin compilación.
+
+Sin build.
+
+Sin npm.
+
+Sin pnpm.
+
+Sin yarn.
+
+Sin Vite.
+
+Sin React.
+
+Sin Next.js.
+
+Sin TypeScript.
+
+Sin TSX.
+
+Sin JSX.
+
+---
+
+# PROHIBIDO
+
+Eliminar completamente:
+
+* React
+* Next.js
+* TypeScript
+* TSX
+* JSX
+* Vite
+* npm
+* pnpm
+* yarn
+* Tailwind
+* Shadcn
+* Zustand
+* Hooks
+* Componentes React
+* Node.js
+
+No debe existir:
+
+* package.json
+* pnpm-lock.yaml
+* vite.config.*
+* next.config.*
+* node_modules
+* archivos .tsx
+* archivos .jsx
+
+---
+
+# DISEÑO
+
+CONSERVAR EXACTAMENTE EL DISEÑO ACTUAL.
+
+NO MODIFICAR:
+
+## HERO
+
+Mantener exactamente:
+
+* Hero split perfecto
+* Texto a la izquierda
+* Fondo blanco
+* Foto panorámica PVC a la derecha
+* Botón azul Cotiza Ahora
+* Apariencia premium
+
+---
+
+## HEADER
+
+Mantener:
+
+* Header blanco
+* Logo Instaluvi
+* Navegación centrada
+* Botón WhatsApp
+* Sticky Header
+* Blur al hacer scroll
+
+---
+
+## BENEFITS BAR
+
+Mantener:
+
+* Tarjeta flotante
+* 4 beneficios
+* Iconos
+* Diseño actual
+
+---
+
+## NOSOTROS
+
+Mantener:
+
+* Fondo azul navy
+* Estadísticas animadas
+* Grid 2x2
+* Diseño actual
+
+---
+
+## PRODUCTOS
+
+Mantener:
+
+* Cards actuales
+* Categorías
+* Badges
+* Hover
+* Animaciones
+
+---
+
+## PROYECTOS
+
+Mantener:
+
+* Fondo oscuro
+* Estadísticas:
+
+  * 500+
+  * 300+
+  * 100%
+
+Exactamente igual.
+
+---
+
+## NOVEDADES
+
+Mantener slider actual.
+
+---
+
+## SUCURSALES
+
+Mantener diseño actual.
+
+---
+
+## FOOTER
+
+Mantener exactamente:
+
+* CTA azul superior
+* Atención personalizada
+* Cotización sin compromiso
+* Botón WhatsApp verde
+* Footer corporativo
+
+---
+
+# RESPONSIVE
+
+NO CAMBIAR EL RESPONSIVE ACTUAL.
+
+Mantener:
+
+## MÓVIL
+
+* Imagen arriba
+* Texto abajo
+* Navegación inferior tipo app
+
+Estilo:
+
+* Instagram
+* Airbnb
+* Mercado Libre
+
+Mantener:
+
+* Indicador activo
+* Iconos
+* Scroll horizontal
+* Experiencia actual
+
+---
+
+# FIREBASE
+
+Proyecto:
+
+instaluvi-3ef4c
+
+Implementar:
+
+* Authentication
+* Firestore
+* Analytics
+
+Utilizar SDK Modular.
+
+---
+
+# CLOUDINARY
+
+Cloud Name:
+
+dkfmnxxet
+
+Upload Preset:
+
+Instal
+
+Implementar subida real de imágenes usando:
+
+* fetch()
+* FormData()
+
+No usar imágenes simuladas.
+
+---
+
+# LOGIN
+
+Firebase Authentication real.
+
+Funciones:
+
+* Iniciar sesión
+* Cerrar sesión
+* Verificar sesión
+* Mantener sesión
+* Protección Admin
+
+---
+
+# PANEL ADMINISTRATIVO
+
+Crear panel completamente funcional.
+
+Acceso:
+
+Admin
+
+Dashboard
+
+---
+
+# DASHBOARD
+
+Mostrar estadísticas reales:
+
+* Productos
+* Promociones
+* Galería
+* Sucursales
+* Visitas
+
+Datos obtenidos desde Firestore.
+
+---
+
+# CRUD PRODUCTOS
+
+Funciones:
+
+* Crear
+* Editar
+* Eliminar
+* Activar
+* Desactivar
+* Destacar
+
+Campos:
+
+* Imagen
+* Título obligatorio
+* Descripción obligatoria
+* Categoría
+* Galería
+
+Guardar en Firestore.
+
+---
+
+# CRUD GALERÍA
+
+Funciones:
+
+* Subir imágenes
+* Editar
+* Eliminar
+* Filtrar
+
+Guardar en Firestore.
+
+Imágenes en Cloudinary.
+
+---
+
+# CRUD PROMOCIONES
+
+Funciones:
+
+* Crear
+* Editar
+* Eliminar
+* Fecha inicio
+* Fecha final
+* Activación automática
+
+Mostrar en Home.
+
+---
+
+# CRUD SUCURSALES
+
+Administrar:
+
+* Ahuachapán
+* San Juan Opico
+* San Miguel
+* San Salvador
+* El Congo
+* Sonsonate
+
+Campos:
+
+* Imagen
+* Dirección
+* Horarios
+* Teléfono
+* Google Maps
+
+---
+
+# CONFIGURACIÓN DEL SITIO
+
+Modificar desde Admin:
+
+* Logo principal
+* Logo móvil
+* Favicon
+* WhatsApp
+* Facebook
+* Instagram
+* Hero
+* Textos Home
+* Colores
+
+Sin tocar código.
+
+---
+
+# COTIZACIÓN WHATSAPP
+
+Número:
+
+50360707582
+
+Mensaje automático:
+
+Hola INSTALUVI, deseo cotizar el siguiente producto:
+
+[NOMBRE PRODUCTO]
+
+ID:
+[ID PRODUCTO]
+
+LINK:
+[URL]
+
+---
+
+# SEO
+
+Implementar:
+
+* Meta Tags
+* Open Graph
+* Schema.org
+* robots.txt
+* sitemap.xml
+
+---
+
+# RENDIMIENTO
+
+Objetivo:
+
+95+ Lighthouse
+
+* Performance
+* Accessibility
+* SEO
+* Best Practices
+
+---
+
+# ENTREGA
+
+NO QUIERO CÓDIGO INCOMPLETO.
+
+NO QUIERO PLACEHOLDERS.
+
+NO QUIERO "CONTINUAR DESPUÉS".
+
+NO QUIERO DEMOS.
+
+NO QUIERO DATOS MOCK.
+
+QUIERO CÓDIGO REAL Y FUNCIONAL.
+
+Y SOBRE TODO:
+
+MANTENER EXACTAMENTE EL DISEÑO ACTUAL QUE YA LOGRASTE.
+
+SOLO CAMBIAR LA TECNOLOGÍA INTERNA A HTML + CSS + JAVASCRIPT VANILLA PARA QUE FUNCIONE DIRECTAMENTE EN GITHUB PAGES.
