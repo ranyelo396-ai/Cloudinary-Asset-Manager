@@ -1,0 +1,286 @@
+HTML CSS JAVASCRIPT + FIREBASE + CLOUDINARY
+ESCUCHA BIEN TIENE QUE SER EXACTAMENTE ASI HAZLO LA IMAGNEN QUE TE PROPORCIONE
+Desarrolla una plataforma web profesional para INSTALUVI especializada en fabricación e instalación de puertas y ventanas PVC en El Salvador
+La web debe replicar visualmente de forma muy cercana el diseño mostrado en la imagen de referencia.
+Debe funcionar completamente en GitHub Pages sin necesidad de backend propio.
+
+TECNOLOGÍAS OBLIGATORIAS
+Utilizar únicamente:
+* HTML5
+* CSS3
+* JavaScript ES6+
+* Firebase Authentication
+* Firestore Database
+* Firebase Analytics
+* Cloudinary
+* Font Awesome
+* Swiper.js
+* AOS Animations
+NO utilizar:
+* React
+* Next.js
+* Angular
+* Vue
+* Node.js
+* Express
+* PHP
+* Laravel
+Todo debe funcionar como sitio estático desplegable en GitHub Pages.
+
+ESTRUCTURA DEL PROYECTO
+/index.html
+/admin.html
+/login.html
+/assets/css/
+/assets/js/
+/assets/images/
+/assets/icons/
+
+DISEÑO GENERAL
+Inspirado exactamente en la imagen de referencia.
+Colores:
+* Azul corporativo
+* Blanco
+* Gris claro
+Estilo:
+* Premium
+* Corporativo
+* Moderno
+* Elegante
+* Responsive
+Animaciones suaves.
+Sombras modernas.
+Cards limpias.
+Espaciado profesional.
+
+HEADER
+Logo editable.
+Menú:
+* Inicio
+* Nosotros
+* Productos
+* Proyectos
+* Sucursales
+* Contacto
+Botón:
+"Cotizar Ahora"
+Header sticky.
+Efecto blur al hacer scroll.
+
+HERO
+Imagen grande.
+Título principal:
+Ventanas y puertas que transforman tu hogar.
+Subtítulo.
+Botón WhatsApp.
+Botón Ver Productos.
+Slider automático.
+
+NOVEDADES
+Carrusel horizontal.
+Administrable desde panel.
+Cada novedad:
+* Imagen
+* Título
+* Descripción
+
+BENEFICIOS
+Mostrar:
+* Alta resistencia
+* Aislamiento térmico
+* Aislamiento acústico
+* Garantía de instalación
+Con iconos modernos.
+
+NOSOTROS
+Mostrar:
+20+ años de experiencia.
+Contadores animados.
+* Experiencia
+* Clientes
+* Proyectos
+* Garantía
+
+PRODUCTOS
+Categorías:
+* Ventanas Corredizas
+* Ventanas Abatibles
+* Puertas Corredizas
+* Puertas PVC
+* Otros
+Cada producto debe tener:
+* ID automático
+* Título obligatorio
+* Descripción obligatoria
+* Imagen principal obligatoria
+* Galería opcional
+* Destacado
+* Promoción
+Botón:
+Cotizar por WhatsApp
+Mensaje automático:
+Hola INSTALUVI, deseo cotizar el producto:
+[NOMBRE PRODUCTO]
+ID:
+[ID PRODUCTO]
+
+Número:
+50360707582
+
+GALERÍA
+Filtros:
+* Ventanas
+* Puertas
+* Proyectos
+* Instalaciones
+Grid Masonry.
+Lightbox.
+Cloudinary.
+
+SUCURSALES
+Mostrar:
+* Ahuachapán
+* San Juan Opico
+* San Miguel
+* San Salvador
+* El Congo
+* Sonsonate
+Cada sucursal:
+* Imagen
+* Dirección
+* Horario
+* Teléfono
+* Google Maps
+Administrable.
+
+REDES SOCIALES
+Facebook:
+https://www.facebook.com/share/1CLdnaFaV9/?mibextid=wwXIfr
+Instagram:
+https://www.instagram.com/instaluvi_elsalvador
+WhatsApp:
+60707582
+Mostrar en:
+* Footer
+* Contacto
+* Menú móvil
+
+VERSIÓN MÓVIL
+Diseño tipo aplicación.
+Bottom Navigation fija.
+Opciones:
+* Inicio
+* Productos
+* Novedades
+* Galería
+* Contacto
+Estilo similar a Instagram.
+
+LOGIN
+Firebase Authentication.
+Correo y contraseña.
+Roles:
+* Super Admin
+* Administrador
+Protección de sesión.
+Logout.
+
+PANEL ADMINISTRATIVO
+Ruta:
+admin.html
+Dashboard moderno.
+Estadísticas:
+* Productos
+* Galería
+* Promociones
+* Sucursales
+* Visitas
+
+CRUD PRODUCTOS
+Crear.
+Editar.
+Eliminar.
+Destacar.
+Activar.
+Desactivar.
+Campos obligatorios:
+* Título
+* Descripción
+* Imagen principal
+Guardar en Firestore.
+
+CRUD GALERÍA
+Subir múltiples imágenes.
+Cloudinary.
+Eliminar imágenes.
+Editar categorías.
+
+CRUD SUCURSALES
+Agregar.
+Editar.
+Eliminar.
+Imagen por sucursal.
+Mapa.
+Dirección.
+
+CRUD PROMOCIONES
+Crear promociones.
+Programar fechas.
+Activar y desactivar.
+Mostrar automáticamente en Home.
+
+CONFIGURACIÓN DEL SITIO
+Cambiar desde panel:
+* Logo principal
+* Logo móvil
+* WhatsApp
+* Facebook
+* Instagram
+* Colores corporativos
+* Textos Home
+Sin modificar código.
+
+CLOUDINARY
+Cloud Name:
+dkfmnxxet
+Upload Preset:
+Instal
+Implementar:
+* Upload directo
+* Optimización automática
+* Conversión WebP
+* Responsive Images
+
+FIREBASE
+Proyecto:
+instaluvi-3ef4c
+Implementar Firebase Modular SDK.
+Colecciones:
+users
+products
+gallery
+promotions
+branches
+settings
+news
+quotes
+analytics
+
+SEO
+Meta Tags.
+Open Graph.
+Schema Local Business.
+robots.txt
+sitemap.xml
+URLs amigables.
+
+RENDIMIENTO
+Objetivo:
+95+ Lighthouse
+Carga rápida.
+Lazy Loading.
+Compresión de imágenes.
+Optimización móvil.
+
+RESULTADO FINAL(de caras el código completo )
+Generar una plataforma corporativa premium para INSTALUVI visualmente casi idéntica a la referencia proporcionada, con experiencia móvil tipo aplicación, completamente responsive, desplegable directamente en GitHub Pages, integrada con Firebase Authentication, Firestore y Cloudinary, incluyendo panel administrativo funcional, gestión de productos, promociones, galerías, sucursales, configuración del sitio, cotización automática por WhatsApp y administración completa sin modificar código.
